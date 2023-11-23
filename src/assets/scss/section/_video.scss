@@ -1,0 +1,204 @@
+.search__header {
+    display: flex;
+    align-items: center;
+
+    h2 {
+        width: 80px;
+        height: 100%;
+        display: flex;
+        margin-right: 10px;
+        text-align: center;
+        justify-content: center;
+    }
+
+    a {
+        width: 80px;
+        height: 100%;
+        background-color: #cccfff;
+        border-radius: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+
+    }
+}
+
+.video__inner {
+    display: grid;
+    grid-template-columns: repeat(8, 10%);
+    justify-content: space-between;
+    box-sizing: border-box;
+    margin: 20px;
+
+    @media (max-width: 1400px) {
+        grid-template-columns: repeat(3, 32%);
+        gap: 15px;
+    }
+
+    @media (max-width: 1200px) {
+        grid-template-columns: repeat(2, 49%);
+        gap: 10px
+    }
+
+    @media (max-width: 400px) {
+        grid-template-columns: repeat(1, 100%);
+    }
+
+    .video {
+        width: 200px;
+        height: 250px;
+        margin-bottom: 6%;
+        background-color: var(--white);
+        padding: 10px 0;
+        display: block;
+        text-align: center;
+
+        .video__thumb {
+
+            a {
+                width: 150px;
+                height: 150px;
+                display: flex;
+                margin: 0 auto;
+                cursor: pointer;
+                // padding-bottom: 56.25%;
+                background-size: cover;
+                background-position: center;
+                border-radius: 30px;
+            }
+
+        }
+
+        .video__info {
+            .info {
+                &:hover {}
+            }
+
+            .title {
+                margin-top: 10px;
+                margin-bottom: 5px;
+                @include line(2);
+            }
+
+            .desc {
+                width: 100%;
+                @include line(3);
+                color: var(--black300);
+            }
+        }
+    }
+}
+
+
+
+.video__wrap {
+    display: flex;
+
+    .video__view {
+        width: 70%;
+        height: 100vh;
+
+        margin: 20px;
+        box-sizing: border-box;
+
+        .video__play {
+            width: 100%;
+            height: 70%;
+
+            position: relative;
+        }
+
+        .video__info {
+            display: block;
+            margin: 20px;
+
+            .video__title {}
+
+            .video__channel {
+                display: flex;
+                justify-content: space-between;
+
+                .id {
+                    .author {}
+                }
+
+                .count {
+                    display: block;
+                    border: 3px solid #cccfff;
+                    border-radius: 30px;
+                    padding: 20px;
+
+                    &:hover {
+                        background-color: #cccfff;
+                    }
+
+                    span {
+                        margin-right: 10px;
+                    }
+
+                    .view {
+                        padding: 5px;
+                    }
+
+                    .like {
+                        padding: 5px;
+
+                    }
+
+                    .comment {
+                        padding: 5px;
+
+                    }
+                }
+            }
+        }
+    }
+
+    .playlist {
+        width: 30%;
+        background-color: rgba(204, 153, 255, 0.2);
+        display: block;
+
+        .commentName {
+            font-size: 14px;
+            padding: 5px;
+            // border: 1px solid pink;
+        }
+
+        .commentbox {
+            font-size: 14px;
+            padding: 5px;
+            background-color: #fff;
+
+        }
+    }
+}
+
+
+.video__view {
+
+    .video__title {
+        width: 100%;
+        height: 40px;
+        font-size: 30px;
+        line-height: 1.5;
+        margin-left: 0;
+    }
+
+
+    .video__play {}
+
+    .video__info {}
+
+    .video__desc {}
+}
+
+.video__more {
+    border: 1px solid red;
+    display: block;
+    text-align: center;
+    width: 100%;
+    height: 30px;
+    font-size: 1.25rem;
+}

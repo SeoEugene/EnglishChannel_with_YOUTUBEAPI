@@ -1,0 +1,28 @@
+@font-face {
+    font-family: "wooju";
+    font-weight: 300;
+    font-style: normal;
+    src: url("../../fonts/wooJu.woff2") format("woff2");
+    src: url("../../fonts/wooJu.woff") format("woff");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "murukmuruk";
+    font-weight: 300;
+    font-style: normal;
+    src: url("../../fonts/murukmuruk.woff2") format("woff2");
+    src: url("../../fonts/murukmuruk.woff") format("woff");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Yanolja";
+    font-weight: 300;
+    font-style: normal;
+    src: url("../../fonts/YanoljaYacheRegulear.woff2") format("woff");
+    src: url("../../fonts/YanoljaYacheRegular.woff") format("woff2");
+    src: url("../../fonts/YanoljaYacheBold.woff2") format("woff");
+    src: url("../../fonts/YanoljaYacheBold.woff") format("woff2");
+    font-display: swap;
+}
