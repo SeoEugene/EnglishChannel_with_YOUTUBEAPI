@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Main from '../components/section/Main';
 import { fetchFromAPI } from '../utils/api'
 import { Link } from 'react-router-dom';
-import Swiper from 'swiper';
 
 const Today = () => {
     const [todayvideos, settodayvideos] = useState([]);
@@ -28,7 +27,8 @@ const Today = () => {
         >
             <section id='today'>
                 <h2>Today Video</h2>
-                <Swiper slidesPerView={5}>
+                <div>
+                    {/* <Swiper slidesPerView={5}> */}
                     {todayvideos.map((video, index) => (
                         <div className="today__inner" key={index}>
                             <div className="today__thumb">
@@ -45,7 +45,8 @@ const Today = () => {
                             </div>
                         </div>
                     ))}
-                </Swiper>
+                    {/* </Swiper> */}
+                </div>
 
             </section>
         </Main>

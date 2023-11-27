@@ -56,7 +56,7 @@ export const keywordText = [
 export const snsText = [
     {
         title: "github",
-        src: "https://github.com/",
+        src: "https://github.com/SeoEugene/EnglishChannel_with_YOUTUBEAPI",
         icon: <FiGithub />
     }, {
         title: "YouTubeMusic",
