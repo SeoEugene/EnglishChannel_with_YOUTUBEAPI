@@ -1,11 +1,5 @@
 export const youtuberText = [
     {
-        img: "https://yt3.ggpht.com/tIWlFy4SZOPwbsCOdM3eL2WkONVkDzAUm3J_MjSDn6YDzSqRPFkjRGHo7HS17lbUsolFJvGf=s48-c-k-c0x00ffffff-no-rj",
-        author: "Jing",
-        channelId: "UCvgT7Cks83k1VplVQxC4y4A",
-        channelAddress: "https://www.youtube.com/@jingsuuu",
-    },
-    {
         img: "https://yt3.googleusercontent.com/RDV1RUmxKWRmCWuivJqHlLLOIhdLfnd5TCjk524P5qLSmAJ48W0EVeYSQtTDsuuDAU0bU3z2Nw=s176-c-k-c0x00ffffff-no-rj",
         author: "Zeliha Akpinar",
         channelId: "UChME7blpRpX1ViN-oPBpNmw",

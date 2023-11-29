@@ -10,7 +10,7 @@ const Today = () => {
     useEffect(() => {
         const fetchVideos = async () => {
             try {
-                const videos = await fetchFromAPI(`search?type=video&part=snippet&q=English`)
+                const videos = await fetchFromAPI(`search?type=video&part=snippet&q=english channel korean`)
                 settodayvideos(videos.items[0]);
                 console.log(todayvideos);
             } catch (error) {
@@ -29,9 +29,10 @@ const Today = () => {
         <section id='today' className='bgcyellow'>
             <h2>Today Video</h2>
             <div className="today__inner">
-                <div className="today__thubm">
-                    <Link to='' style={{ backgroundImage: `url(${todayvideos.snippet.thumbnails.high.url})` }}></Link>
+                <div className="today__thumb">
+                    <Link to={`/video/${todayvideos.id.videoId}`} style={{ backgroundImage: `url(${todayvideos.snippet.thumbnails.high.url})` }}></Link>
                 </div>
+
                 <div className='today__text'>
                     <span className='today'>오늘의 픽</span>
 

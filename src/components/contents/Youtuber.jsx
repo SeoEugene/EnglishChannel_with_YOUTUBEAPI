@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { Autoplay, Navigation } from 'swiper/modules';
+
 
 const youtuber = () => {
     return (
@@ -17,16 +17,13 @@ const youtuber = () => {
                 <Swiper
                     slidesPerView={6}
                     spaceBetween={20}
-                    centeredSlides={true}
+                    centeredSlides={false}
                     autoplay={{
                         delay: 3000,
                         disableOnInteraction: false,
                     }}
-                    pagination={{
-                        clickable: true,
-                    }}
                     navigation={true}
-                    modules={[Autoplay, Pagination, Navigation]}
+                    modules={[Autoplay, Navigation]}
                     className="mySwiper"
                     breakpoints={{
                         400: {

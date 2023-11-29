@@ -10,7 +10,7 @@ const Today = () => {
     useEffect(() => {
         const fetchVideos = async () => {
             try {
-                const videos = await fetchFromAPI(`search?type=video&part=snippet&q=English`)
+                const videos = await fetchFromAPI(`search?type=video&part=snippet&q=english channel korean`)
                 settodayvideos(videos.items);
                 console.log(todayvideos);
             } catch (error) {
@@ -32,7 +32,8 @@ const Today = () => {
                     {todayvideos.map((video, index) => (
                         <div className="today__inner" key={index}>
                             <div className="today__thumb">
-                                <Link to='' style={{ backgroundImage: `url(${video.snippet.thumbnails.high.url})` }}></Link>
+
+                                <Link to={`/video/${video.id.videoId}`} style={{ backgroundImage: `url(${video.snippet.thumbnails.high.url})` }}></Link>
                             </div>
                             <div className='today__text'>
                                 <span className='today'>오늘의 픽</span>
@@ -49,7 +50,7 @@ const Today = () => {
                 </div>
 
             </section>
-        </Main>
+        </Main >
     )
 }
 

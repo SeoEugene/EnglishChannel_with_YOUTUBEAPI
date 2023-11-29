@@ -2,23 +2,21 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
 import 'swiper/css/navigation';
 
 import { Navigation } from 'swiper/modules';
 
-const VideoSlider = ({ name, videos, title }) => {
+const VideoSlider = ({ videos, name1, name2 }) => {
     return (
-        <section id={name}>
-            <h2>{title}</h2>
-
+        <section id={name1}>
+            <h3>{name2}</h3>
             <div className="video__slider">
                 <Swiper
                     slidesPerView={1}
                     spaceBetween={20}
                     navigation={true}
                     modules={[Navigation]}
-                    className={`mySwiper-${name}`}
+                    className={`mySwiper-${name1}`}
                     breakpoints={{
                         640: {
                             slidesPerView: 2,
@@ -44,7 +42,8 @@ const VideoSlider = ({ name, videos, title }) => {
                                 <div className="video__thumb play__icon">
                                     <Link
                                         to={`/video/${video.id.videoId}`}
-                                        style={{ backgroundImage: `url(${video.snippet.thumbnails.high.url})` }}>
+                                        style={{ backgroundImage: `url(${video.snippet.thumbnails.high && video.snippet.thumbnails.high.url})` }}
+                                    >
                                     </Link>
                                 </div>
                                 <div className="video__info">
@@ -52,7 +51,6 @@ const VideoSlider = ({ name, videos, title }) => {
                                         <Link to={`/video/${video.id.videoId}`}>{video.snippet.title}</Link>
                                     </h3>
                                     <div className='info'>
-                                        <Link to={`/channel/${video.snippet.channelId}`} className='author'>{video.snippet.channelTitle}</Link>
                                     </div>
                                 </div>
                             </div>
@@ -62,6 +60,7 @@ const VideoSlider = ({ name, videos, title }) => {
             </div>
 
         </section>
+
     )
 }
 

@@ -202,3 +202,33 @@
     height: 30px;
     font-size: 1.25rem;
 }
+
+// home video__slider
+.video__slider {
+
+
+    .video {
+
+        .video__thumb {}
+
+        .video__thumb a {
+            width: 100%;
+            height: 150px;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .video__info {
+            .title {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+
+            }
+
+            .info {}
+        }
+    }
+}
