@@ -26,11 +26,11 @@ const VideoSearch = ({ videos }) => {
                             <Link to={`/video/${video.id.videoId}`}>{video.snippet.title}</Link>
                         </h3>
                         <p className='desc'>
-                            {video.snippet.description}
+                            {/* {video.snippet.description} */}
                         </p>
                         <div className='info'>
                             <Link to={`/channel/${video.snippet.channelId}`} className='author'>{video.snippet.channelTitle}</Link>
-                            <span className='date'>{formatDate(video.snippet.publishedAt)}</span>
+                            {/* <span className='date'>{formatDate(video.snippet.publishedAt)}</span> */}
                         </div>
                     </div>
                 </div>
