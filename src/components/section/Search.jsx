@@ -15,12 +15,6 @@ const Search = () => {
 
     return (
         <div id='search'>
-            <div className='mobile__menu'>
-                <p>menu</p>
-                <div>
-                    <span></span>
-                </div>
-            </div>
             <div className="search__inner">
                 <label htmlFor="searchInput">검색</label>
                 <input type='search'

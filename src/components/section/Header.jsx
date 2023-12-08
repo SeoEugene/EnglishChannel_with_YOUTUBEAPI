@@ -12,8 +12,8 @@ const Header = () => {
     };
 
     return (
-        <header id='header' toggleMenuBar={toggleMenuBar} role='banner'>
-            <Logo />
+        <header id='header' className={isMenuBarVisible ? 'show' : ''} role='banner'>
+            <Logo toggleMenuBar={toggleMenuBar} />
             <Menu />
             <Sns />
         </header>

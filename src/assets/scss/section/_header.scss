@@ -7,6 +7,10 @@
         margin: 10px;
         color: #333;
 
+        .ham {
+            display: none;
+        }
+
         em {
             width: 50px;
             height: 50px;
@@ -154,4 +158,43 @@
         }
     }
 
+}
+
+@media (max-width: 800px) {
+    .header__logo {
+        position: fixed;
+        left: 0;
+        top: 0;
+        margin-left: 5px;
+        margin-top: 5px;
+        box-sizing: border-box;
+
+
+        a {
+
+
+            .ham {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #fff;
+                width: 15px;
+                height: 15px;
+                font-size: 15px;
+                background-color: #B0A695;
+                padding: 25px;
+                border-radius: 30%;
+
+            }
+
+            em {
+                display: none;
+            }
+
+            span {
+                display: none;
+            }
+        }
+
+    }
 }
