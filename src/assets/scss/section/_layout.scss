@@ -38,15 +38,17 @@
 
 @media (max-width: 800px) {
     #header {
+        top: 75px;
         left: -260px;
-        transition: all 0.3s ease-in;
+        // transition: all 0.3s ease-in;
 
         &.show {
-            top: 100px;
+            top: 75px;
             left: 0;
 
         }
     }
+
 
     #main {
         padding-left: 0;
