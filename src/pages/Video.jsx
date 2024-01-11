@@ -7,12 +7,14 @@ import Main from '../components/section/Main';
 const Video = () => {
     const { videoId } = useParams();
     const [videoDetail, setVideoDetail] = useState(null);
+    const [tag, settag] = useState('');
 
     useEffect(() => {
         fetchFromAPI(`videos?part=snippet, statistics&id=${videoId}`)
             .then((data) => {
                 setVideoDetail(data.items[0]);
-                console.log(data);
+                console.log("영상데이터:", data.items[0]);
+                settag(data.items[0].snippet.tags)
             })
     }, [videoId]);
 
@@ -42,13 +44,21 @@ const Video = () => {
                                 {videoDetail.snippet.channelTitle}
                             </div>
                             <div className='count'>
-                                <span className='view'>{videoDetail.statistics.viewCount}</span>
-                                <span className='like'>{videoDetail.statistics.likeCount}</span>
-                                <span className='comment'>{videoDetail.statistics.commentCount}</span>
+                                <span className='view'>view: {videoDetail.statistics.viewCount}</span>
+                                <span className='like'>like: {videoDetail.statistics.likeCount}</span>
+                                <span className='comment'>comment: {videoDetail.statistics.commentCount}</span>
                             </div>
                         </div>
                         <div className="video__desc">
-                            {videoDetail.snippet.description}
+                            <div className="tag">
+                                {tag.map((tag, index) => (
+                                    <span key={index}>#{tag}      </span>
+                                ))}
+                            </div>
+                            <div className="description">
+                                {videoDetail.snippet.description}
+                            </div>
+
                         </div>
                     </div>
                 )}

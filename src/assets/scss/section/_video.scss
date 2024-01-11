@@ -189,9 +189,40 @@
 
     .video__play {}
 
-    .video__info {}
+    .video__info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.4em;
+        padding: 20px 0px;
 
-    .video__desc {}
+        .id {}
+
+        .count {
+
+
+            span {
+                text-align: left;
+                padding: 0px 10px;
+            }
+        }
+
+
+    }
+
+    .video__desc {
+        font-size: 1.2em;
+
+        .tag {
+            color: #B0A695;
+            border-bottom: 2px solid #B0A695;
+            padding: 10px 0px;
+
+        }
+
+        .description {
+            margin-top: 20px;
+        }
+    }
 }
 
 .video__more {
