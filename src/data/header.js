@@ -5,7 +5,8 @@ import { SiVisualbasic } from "react-icons/si";
 import { GiClover } from "react-icons/gi";
 import { FaFireAlt } from "react-icons/fa";
 import { FiGithub } from "react-icons/fi";   //  Github아이콘
-import { SiYoutubemusic } from "react-icons/si";    // Youtube Music아이콘
+import { FaYoutube } from "react-icons/fa";    // Youtube아이콘
+import { FaReact } from "react-icons/fa"; // react아이콘
 
 export const menuText = [
     {
@@ -151,11 +152,11 @@ export const snsText = [
         icon: <FiGithub />
     }, {
         title: "YouTubeMusic",
-        src: "https://www.youtube.com/premium",
-        icon: <SiYoutubemusic />
+        src: "https://www.youtube.com",
+        icon: <FaYoutube />
     }, {
-        title: "Blog",
-        src: "",
-        icon: <FiGithub />
+        title: "react",
+        src: "https://ko.legacy.reactjs.org/docs/getting-started.html",
+        icon: <FaReact />
     }
 ]

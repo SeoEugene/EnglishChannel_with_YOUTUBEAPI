@@ -41,7 +41,7 @@ const Channel = () => {
 
     return (
         <Main
-            title="영어 유튜버 채널"
+            title="English Channel"
             description="영어를 접하기 쉬운 채널"
         >
             <section id='channelPage' className={channelPageClass}>

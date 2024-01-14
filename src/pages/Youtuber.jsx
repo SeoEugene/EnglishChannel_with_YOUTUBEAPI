@@ -7,7 +7,7 @@ import Main from '../components/section/Main';
 const Youtuber = () => {
     return (
         <Main
-            title="영어 유튜버입니다."
+            title="English Youtuber"
             description="한국어 영어에 능통한 유튜버들입니다."
         >
             <section id='youtuber' className='page'>

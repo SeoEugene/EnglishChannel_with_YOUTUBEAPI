@@ -10,7 +10,7 @@ const Main = (props) => {
         <HelmetProvider>
             <scrollTo />
             <Helmet
-                titleTemplate="%s / English Youtube"
+                titleTemplate="%s / Find English"
                 defaultTitle="English Youtube"
                 defer={false}
             >

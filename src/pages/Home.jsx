@@ -48,7 +48,7 @@ const Home = () => {
 
     return (
         <Main
-            title="영어 유튜버"
+            title="English Youtube"
             description="영어 유튜버 모음 사이트에 오신것을 환영합니다."
         >
             <Today />
