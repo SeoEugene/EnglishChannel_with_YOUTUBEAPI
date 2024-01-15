@@ -25,7 +25,165 @@
 6.  react-helmet-async
 7.  swiper
 
+## Layout (header, Search, Footer)
+### header (Logo, Menu, Sns)
+1. Logo.jsx
+```
+const Logo = ({ toggleMenuBar }) => {
+    return (
+        <>
+            <h1 className='header__logo'>
+                <Link to='/' onClick={toggleMenuBar}>
+                    <em><GiButterfly /></em>
+                    <div>Find English</div>
+                </Link>
+            </h1>
+        </>
+    )
+}
+```
+
+2. Menu.jsx
+```
+const Menu = () => {
+    const location = useLocation();
+    return (
+        <nav className='header__menu'>
+            <ul className='menu'>
+                {menuText.map((menu, key) => (
+                    <li key={key} className={location.pathname === menu.src ? 'active' : ''}>
+                        <Link to={menu.src}>
+                            {menu.icon} {menu.title}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+            <ul className='keyword'>
+                {keywordText.map((keyword, key) => (
+                    <li key={key} className={decodeURIComponent(location.pathname) === decodeURIComponent(keyword.src) ? 'active' : ''}>
+                        <Link to={keyword.src}>
+                            {keyword.icon} {keyword.title}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+    )
+}
+```
+
+3. Sns.jsx
+```
+const Sns = () => {
+    return (
+        <div className="header__sns">
+            <ul>
+                {snsText.map((sns, key) => (
+                    <li key={key}>
+                        <a href={sns.src} target='_blank' rel='nonopener noreferrer'>
+                            <span>{sns.icon}</span>
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )
+}
+```
+
+### Search
+1. Search
+```
+const Search = () => {
+    const [searchKeyword, setSearchKeyword] = useState('');
+    const Navigate = useNavigate();
+
+    const handleSearch = () => {
+        if (searchKeyword) {
+            Navigate(`/search/${searchKeyword}`);
+            setSearchKeyword('');
+        }
+    }
+
+    return (
+        <div id='search'>
+            <div className="search__inner">
+                <label htmlFor="searchInput">검색</label>
+                <input type='search'
+                    id='searchInput'
+                    placeholder='검색어를 입력해주세요.'
+                    autoComplete='off'
+                    className='search__input'
+                    onChange={e => setSearchKeyword(e.target.value)}
+                    onKeyDown={e => {
+                        if (e.key === "Enter") {
+                            handleSearch();
+                        }
+                    }}
+                />
+            </div>
+        </div>
+    )
+}
+```
+
+### Footer
+1. Footer
+```
+const Footer = () => {
+    return (
+        <footer id='footer' role='contentinfo'>
+            <a href="mailto:97.eugene.s@gmail.com"
+                rel="noopener noreferrer">
+                97.eugene.s@gmail.com
+            </a>
+        </footer>
+    )
+}
+```
+
 ## 페이지 구성
+### Route(App.js)
+```
+<BrowserRouter>
+      <Suspense fallback={<Main />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/Today" element={<Today />} />
+          <Route path="/Youtuber" element={<Youtuber />} />
+          <Route path="/channel/:channelId" element={<Channel />} />
+          <Route path="/search/:searchId" element={<Search />} />
+          <Route path="/video/:videoId" element={<Video />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+```
+### Main.jsx
+```
+const Main = (props) => {
+    return (
+        <HelmetProvider>
+            <scrollTo />
+            <Helmet
+                titleTemplate="%s / English Youtube"
+                defaultTitle="English Youtube"
+                defer={false}
+            >
+                {props.title && <title>{props.title}</title>}
+                <meta name="description" content={props.description}></meta>
+            </Helmet>
+
+            <Header />
+            <main id='main' role='main'>
+                <Search />
+                {props.children}
+            </main>
+            <Footer />
+        </HelmetProvider>
+    )
+}
+```
+
 1. Home ( Today 컴포넌트, Youtuber 컴포넌트, VideoSlider 컴포넌트)
 ![Home](Main1.png)
 ![Home](Main2.png)
@@ -77,9 +235,175 @@ const Home = () => {
     )
 ```
 
+`Today 컴포넌트`
+```
+const Today = () => {
+    const [todayvideos, settodayvideos] = useState(null);
+
+    // 비디오 가져오기
+    useEffect(() => {
+        const fetchVideos = async () => {
+            try {
+                const videos = await fetchFromAPI(`search?type=video&part=snippet&q=english channel korean`)
+                settodayvideos(videos.items[0]);
+                console.log(todayvideos);
+            } catch (error) {
+                console.error('Error fetching videos:', error);
+            }
+        };
+        fetchVideos();
+    }, []);
+
+    if (!todayvideos) {
+        // 데이터가 아직 로딩 중이면 로딩 상태를 표시하거나 아무것도 표시하지 않음
+        return <p>Loading...</p>;
+    }
+
+    return (
+        <section id='today' className='bgcyellow'>
+            <h2>Today Video</h2>
+            <div className="today__inner">
+                <div className="today__thumb">
+                    <Link to={`/video/${todayvideos.id.videoId}`} style={{ backgroundImage: `url(${todayvideos.snippet.thumbnails.high.url})` }}></Link>
+                </div>
+
+                <div className='today__text'>
+                    <span className='today'>오늘의 픽</span>
+
+                    <h3 className='title'>{todayvideos.snippet.title}</h3>
+                    <p className='desc'>
+                        {todayvideos.snippet.description}
+                    </p>
+                    <div className="info">
+                        <span className='author'></span>
+                        <span className='data'></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    )
+}
+```
+
+`Youtuber 컴포넌트`
+```
+const youtuber = () => {
+    return (
+
+        <section id='youtuber'>
+            <div className='youtuber__inner'>
+                <h2>English Channel Youtubers</h2>
+                <Swiper
+                    slidesPerView={6}
+                    spaceBetween={20}
+                    centeredSlides={false}
+                    autoplay={{
+                        delay: 3000,
+                        disableOnInteraction: false,
+                    }}
+                    navigation={true}
+                    modules={[Autoplay, Navigation]}
+                    className="mySwiper"
+                    breakpoints={{
+                        400: {
+                            slidesPerView: 3,
+                            spaceBetween: 20
+                        },
+                        800: {
+                            slidesPerView: 4,
+                            spaceBetween: 20
+                        },
+                        1200: {
+                            slidesPerView: 5,
+                            spaceBetween: 20
+                        },
+                        1600: {
+                            slidesPerView: 6,
+                            spaceBetween: 20
+                        },
+                    }}
+                >
+                    {youtuberText.map((youtuber, index) => (
+                        <SwiperSlide>
+                            <div className="youtuber">
+                                <div className='youtuber__img'>
+                                    <Link to={`/channel/${youtuber.channelId}`}>
+                                        <img src={youtuber.img} alt={youtuber.author} />
+                                    </Link>
+                                </div>
+                                <div className="youtuber__info">{youtuber.author}</div>
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
+        </section >
+    )
+}
+```
+
+`VideoSlider 컴포넌트`
+```
+const VideoSlider = ({ videos, name1, name2 }) => {
+    return (
+        <section id={name1}>
+            <h3>{name2}</h3>
+            <div className="video__slider">
+                <Swiper
+                    slidesPerView={1}
+                    spaceBetween={20}
+                    navigation={true}
+                    modules={[Navigation]}
+                    className={`mySwiper-${name1}`}
+                    breakpoints={{
+                        640: {
+                            slidesPerView: 2,
+                            spaceBetween: 20
+                        },
+                        768: {
+                            slidesPerView: 3,
+                            spaceBetween: 20
+                        },
+                        1024: {
+                            slidesPerView: 4,
+                            spaceBetween: 20
+                        },
+                        1600: {
+                            slidesPerView: 5,
+                            spaceBetween: 20
+                        }
+                    }}
+                >
+                    {videos.map((video, key) => (
+                        <SwiperSlide key={key}>
+                            <div className="video">
+                                <div className="video__thumb play__icon">
+                                    <Link
+                                        to={`/video/${video.id.videoId}`}
+                                        style={{ backgroundImage: `url(${video.snippet.thumbnails.high && video.snippet.thumbnails.high.url})` }}
+                                    >
+                                    </Link>
+                                </div>
+                                <div className="video__info">
+                                    <h3 className='title'>
+                                        <Link to={`/video/${video.id.videoId}`}>{video.snippet.title}</Link>
+                                    </h3>
+                                    <div className='info'>
+                                    </div>
+                                </div>
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
+
+        </section>
+
+    )
+```
 
 
-3. Today (데이터가 많아 화질 나쁨 주의)
+2. Today (데이터가 많아 화질 나쁨 주의)
 ![Today](Today.png)
 ```
 const Today = () => {
@@ -212,7 +536,7 @@ const youtuber = () => {
 
 **`breakpoints`: 미디어 쿼리를 사용하여 뷰포트 크기에 따라 슬라이더의 설정을 변경할 수 있도록 설정합니다. 여기서는 400px, 800px, 1200px, 1600px의 뷰포트 크기에 따라 슬라이더의 슬라이드 개수와 간격을 다르게 설정하였습니다.**
 
-5. Search
+4. Search
 ![Search](Search.png)
 ```
 const Search = () => {
@@ -279,7 +603,7 @@ const Search = () => {
 
 **검색한 키워드에 따른 비디오를 차례대로 나열하는 코드 입니다.**
 
-7. Channel
+5. Channel
 ![Channel](Channel.png)
 ```
 const Channel = () => {
@@ -363,7 +687,7 @@ const Channel = () => {
 
 `data `변수에 채널에 관한 정보, `videoData`에 검색한 비디오에 관한 정보를 넣어놓는다.
 
-9. Video
+6. Video
 ![Video](Video.png)
 ```
 const Video = () => {
@@ -426,123 +750,6 @@ const Video = () => {
                 )}
             </section>
         </Main>
-    )
-}
-```
-
-## Layout (header, Search, Footer)
-### header (Logo, Menu, Sns)
-1. Logo.jsx
-```
-const Logo = ({ toggleMenuBar }) => {
-    return (
-        <>
-            <h1 className='header__logo'>
-                <Link to='/' onClick={toggleMenuBar}>
-                    <em><GiButterfly /></em>
-                    <div>Find English</div>
-                </Link>
-            </h1>
-        </>
-    )
-}
-```
-
-2. Menu.jsx
-```
-const Menu = () => {
-    const location = useLocation();
-    return (
-        <nav className='header__menu'>
-            <ul className='menu'>
-                {menuText.map((menu, key) => (
-                    <li key={key} className={location.pathname === menu.src ? 'active' : ''}>
-                        <Link to={menu.src}>
-                            {menu.icon} {menu.title}
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-            <ul className='keyword'>
-                {keywordText.map((keyword, key) => (
-                    <li key={key} className={decodeURIComponent(location.pathname) === decodeURIComponent(keyword.src) ? 'active' : ''}>
-                        <Link to={keyword.src}>
-                            {keyword.icon} {keyword.title}
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-        </nav>
-    )
-}
-```
-
-3. Sns.jsx
-```
-const Sns = () => {
-    return (
-        <div className="header__sns">
-            <ul>
-                {snsText.map((sns, key) => (
-                    <li key={key}>
-                        <a href={sns.src} target='_blank' rel='nonopener noreferrer'>
-                            <span>{sns.icon}</span>
-                        </a>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    )
-}
-```
-
-### Search
-1. Search
-```
-const Search = () => {
-    const [searchKeyword, setSearchKeyword] = useState('');
-    const Navigate = useNavigate();
-
-    const handleSearch = () => {
-        if (searchKeyword) {
-            Navigate(`/search/${searchKeyword}`);
-            setSearchKeyword('');
-        }
-    }
-
-    return (
-        <div id='search'>
-            <div className="search__inner">
-                <label htmlFor="searchInput">검색</label>
-                <input type='search'
-                    id='searchInput'
-                    placeholder='검색어를 입력해주세요.'
-                    autoComplete='off'
-                    className='search__input'
-                    onChange={e => setSearchKeyword(e.target.value)}
-                    onKeyDown={e => {
-                        if (e.key === "Enter") {
-                            handleSearch();
-                        }
-                    }}
-                />
-            </div>
-        </div>
-    )
-}
-```
-
-### Footer
-1. Footer
-```
-const Footer = () => {
-    return (
-        <footer id='footer' role='contentinfo'>
-            <a href="mailto:97.eugene.s@gmail.com"
-                rel="noopener noreferrer">
-                97.eugene.s@gmail.com
-            </a>
-        </footer>
     )
 }
 ```
