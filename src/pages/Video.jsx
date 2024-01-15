@@ -32,7 +32,7 @@ const Video = () => {
 
     return (
         <Main
-            title="비디오를 볼 수 있어요"
+            title="Video"
             description="비디오를 보아요"
         >
             <section id="videoPage">

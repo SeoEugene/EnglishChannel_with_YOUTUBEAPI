@@ -32,8 +32,6 @@ Swiper
 
 ## API
 use youtube API
-use postman API
-use Rapaid API
 
 ### postman
 <p>API 개발 및 테스트를 위한 협업 도구로 널리 사용되는 소프트웨어입니다. API 개발 및 테스트를 위한 협업 도구로 널리 사용되는 소프트웨어입니다.</p>
