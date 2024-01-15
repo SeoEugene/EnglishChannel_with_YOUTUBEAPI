@@ -25,9 +25,26 @@
 6.  react-helmet-async
 7.  swiper
 
-## 기능 구현
-1. 
+## 페이지 구성
+1. Home
+![Home](Main1.png)
+![Home](Main2.png)
 
+2. Today
+![Today](Today.png)
+
+3. Youtuber
+![Youtuber](Youtuber.png)
+
+4. Search
+![Search](Search.png)
+
+5. Channel
+![Channel](Channel.png)
+
+6. Video
+![Video](Video.png)
+   
 
 ### install
 `npm install 
