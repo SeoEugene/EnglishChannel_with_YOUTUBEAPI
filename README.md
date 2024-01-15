@@ -1,6 +1,6 @@
 # 나만의 영어 콘텐츠 유튜브 만들기
-Web page :  https://seoeugene.github.io/EnglishChannel_with_YOUTUBEAPI/
-<img>
+
+## 사이트 바로가기
 
 ## 개요
 영어 콘텐츠를 소개하고, 자주 보는 vlog형식의 콘텐츠를 모아놓음으로 써 유튜브 검색 시간을 줄이고자 제작된 웹 서비스 입니다.
@@ -16,8 +16,17 @@ Web page :  https://seoeugene.github.io/EnglishChannel_with_YOUTUBEAPI/
 3. 채널가기
 4. 영상보기
 
-Swiper
-메뉴(햄버거바)
+# Library
+1. react-router-dom 
+2. axios
+3. react-icons
+4.  react-player
+5.  sass
+6.  react-helmet-async
+7.  swiper
+
+## 기능 구현
+1. 
 
 
 ### install
