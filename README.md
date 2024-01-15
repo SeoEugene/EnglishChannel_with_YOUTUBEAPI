@@ -16,7 +16,7 @@
 3. 채널가기
 4. 영상보기
 
-# Library
+## Library
 1. react-router-dom 
 2. axios
 3. react-icons
@@ -44,9 +44,125 @@
 
 6. Video
 ![Video](Video.png)
-   
 
-### install
+## Layout (header, Search, Footer)
+### header (Logo, Menu, Sns)
+1. Logo.jsx
+```
+const Logo = ({ toggleMenuBar }) => {
+    return (
+        <>
+            <h1 className='header__logo'>
+                <Link to='/' onClick={toggleMenuBar}>
+                    <em><GiButterfly /></em>
+                    <div>Find English</div>
+                </Link>
+            </h1>
+        </>
+    )
+}
+```
+
+2. Menu.jsx
+```
+const Menu = () => {
+    const location = useLocation();
+    return (
+        <nav className='header__menu'>
+            <ul className='menu'>
+                {menuText.map((menu, key) => (
+                    <li key={key} className={location.pathname === menu.src ? 'active' : ''}>
+                        <Link to={menu.src}>
+                            {menu.icon} {menu.title}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+            <ul className='keyword'>
+                {keywordText.map((keyword, key) => (
+                    <li key={key} className={decodeURIComponent(location.pathname) === decodeURIComponent(keyword.src) ? 'active' : ''}>
+                        <Link to={keyword.src}>
+                            {keyword.icon} {keyword.title}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+    )
+}
+```
+
+3. Sns.jsx
+```
+const Sns = () => {
+    return (
+        <div className="header__sns">
+            <ul>
+                {snsText.map((sns, key) => (
+                    <li key={key}>
+                        <a href={sns.src} target='_blank' rel='nonopener noreferrer'>
+                            <span>{sns.icon}</span>
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )
+}
+```
+
+### Search
+1. Search
+```
+const Search = () => {
+    const [searchKeyword, setSearchKeyword] = useState('');
+    const Navigate = useNavigate();
+
+    const handleSearch = () => {
+        if (searchKeyword) {
+            Navigate(`/search/${searchKeyword}`);
+            setSearchKeyword('');
+        }
+    }
+
+    return (
+        <div id='search'>
+            <div className="search__inner">
+                <label htmlFor="searchInput">검색</label>
+                <input type='search'
+                    id='searchInput'
+                    placeholder='검색어를 입력해주세요.'
+                    autoComplete='off'
+                    className='search__input'
+                    onChange={e => setSearchKeyword(e.target.value)}
+                    onKeyDown={e => {
+                        if (e.key === "Enter") {
+                            handleSearch();
+                        }
+                    }}
+                />
+            </div>
+        </div>
+    )
+}
+```
+
+### Footer
+1. Footer
+```
+const Footer = () => {
+    return (
+        <footer id='footer' role='contentinfo'>
+            <a href="mailto:97.eugene.s@gmail.com"
+                rel="noopener noreferrer">
+                97.eugene.s@gmail.com
+            </a>
+        </footer>
+    )
+}
+```
+
+## install
 `npm install 
  react-router-dom axios react-icons react-player sass react-helmet-async swiper`
 
