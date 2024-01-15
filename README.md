@@ -30,20 +30,356 @@
 ![Home](Main1.png)
 ![Home](Main2.png)
 
-2. Today
+2. Today (데이터가 많아 화질 나쁨 주의)
 ![Today](Today.png)
+```
+const Today = () => {
+    const [todayvideos, settodayvideos] = useState(null);
+
+    // 비디오 가져오기
+    useEffect(() => {
+        const fetchVideos = async () => {
+            try {
+                const videos = await fetchFromAPI(`search?type=video&part=snippet&q=english channel korean`)
+                settodayvideos(videos.items[0]);
+                console.log(todayvideos);
+            } catch (error) {
+                console.error('Error fetching videos:', error);
+            }
+        };
+        fetchVideos();
+    }, []);
+
+    if (!todayvideos) {
+        // 데이터가 아직 로딩 중이면 로딩 상태를 표시하거나 아무것도 표시하지 않음
+        return <p>Loading...</p>;
+    }
+
+    return (
+        <section id='today' className='bgcyellow'>
+            <h2>Today Video</h2>
+            <div className="today__inner">
+                <div className="today__thumb">
+                    <Link to={`/video/${todayvideos.id.videoId}`} style={{ backgroundImage: `url(${todayvideos.snippet.thumbnails.high.url})` }}></Link>
+                </div>
+
+                <div className='today__text'>
+                    <span className='today'>오늘의 픽</span>
+
+                    <h3 className='title'>{todayvideos.snippet.title}</h3>
+                    <p className='desc'>
+                        {todayvideos.snippet.description}
+                    </p>
+                    <div className="info">
+                        <span className='author'></span>
+                        <span className='data'></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    )
+}
+```
+`YoutubeAP`I를 이용해 `english channel korean`를 키워드로 비디오를 검색
+
 
 3. Youtuber
 ![Youtuber](Youtuber.png)
+```
+const youtuber = () => {
+    return (
 
-4. Search
+        <section id='youtuber'>
+            <div className='youtuber__inner'>
+                <h2>English Channel Youtubers</h2>
+                <Swiper
+                    slidesPerView={6}
+                    spaceBetween={20}
+                    centeredSlides={false}
+                    autoplay={{
+                        delay: 3000,
+                        disableOnInteraction: false,
+                    }}
+                    navigation={true}
+                    modules={[Autoplay, Navigation]}
+                    className="mySwiper"
+                    breakpoints={{
+                        400: {
+                            slidesPerView: 3,
+                            spaceBetween: 20
+                        },
+                        800: {
+                            slidesPerView: 4,
+                            spaceBetween: 20
+                        },
+                        1200: {
+                            slidesPerView: 5,
+                            spaceBetween: 20
+                        },
+                        1600: {
+                            slidesPerView: 6,
+                            spaceBetween: 20
+                        },
+                    }}
+                >
+                    {youtuberText.map((youtuber, index) => (
+                        <SwiperSlide>
+                            <div className="youtuber">
+                                <div className='youtuber__img'>
+                                    <Link to={`/channel/${youtuber.channelId}`}>
+                                        <img src={youtuber.img} alt={youtuber.author} />
+                                    </Link>
+                                </div>
+                                <div className="youtuber__info">{youtuber.author}</div>
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
+        </section >
+    )
+}
+```
+
+### Swiper: https://swiperjs.com/
+
+**Swiper라는 라이브러리를 사용하여 이미지 슬라이더를 생성하는 코드입니다. Swiper는 웹 페이지에서 다양한 형태의 슬라이더를 만들 수 있도록 도와주는 자바스크립트 라이브러리입니다. 코드를 살펴보면 다음과 같은 설정이 있습니다:**
+
+**`slidesPerView={6}`: 슬라이더에서 동시에 보여지는 슬라이드의 개수를 설정합니다. 여기서는 6개의 슬라이드가 보여지도록 설정되었습니다.**
+
+**`spaceBetween={20}`: 슬라이드 사이의 간격을 설정합니다. 여기서는 20px의 간격이 설정되었습니다.**
+
+**`centeredSlides={false}`: 슬라이드가 가운데 정렬되지 않고 왼쪽으로 정렬되도록 설정되었습니다.**
+
+**`autoplay`: 자동 재생 기능을 설정합니다.** 
+
+**`delay` 속성은 슬라이드 간의 전환 딜레이를 설정하며, `disableOnInteraction` 속성은 슬라이더와 상호작용할 때 자동 재생을 비활성화할지 여부를 설정합니다.**
+
+**`navigation={true}`: 이전 및 다음 버튼을 표시하여 슬라이드를 탐색할 수 있도록 설정합니다.**
+
+**`modules={[Autoplay, Navigation]}`: Swiper 라이브러리의 추가 모듈을 설정합니다. 여기서는 Autoplay와 Navigation 모듈을 사용하도록 설정되었습니다.**
+
+**`className="mySwiper"`: 슬라이더에 적용되는 CSS 클래스 이름을 설정합니다. 이를 통해 스타일을 적용하거나 스타일 시트에서 해당 클래스를 선택할 수 있습니다.**
+
+**`breakpoints`: 미디어 쿼리를 사용하여 뷰포트 크기에 따라 슬라이더의 설정을 변경할 수 있도록 설정합니다. 여기서는 400px, 800px, 1200px, 1600px의 뷰포트 크기에 따라 슬라이더의 슬라이드 개수와 간격을 다르게 설정하였습니다.**
+
+5. Search
 ![Search](Search.png)
+```
+const Search = () => {
+    const { searchId } = useParams();
+    const [videos, setVideos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [nextPageToken, setNextPageToken] = useState(null);
 
-5. Channel
+    useEffect(() => {
+        setVideos([]);
+        fetchVideos(searchId);
+        setLoading(true);
+    }, [searchId]);
+
+
+    const fetchVideos = (query, pageToken = '') => {
+        fetchFromAPI(`search?type=video&part=snippet&q=${query}&pageToken=${pageToken}`)
+
+            .then((data) => {
+
+                setNextPageToken(data.nextPageToken);
+                setVideos((prevVideos) => [...prevVideos, ...data.items])
+                console.log(data)
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.log("Error fetching data", error);
+                setLoading(false);
+            })
+    }
+
+    const handleLoadMore = () => {
+        if (nextPageToken) {
+            fetchVideos(searchId, nextPageToken);
+        }
+    }
+
+    const channelPageClass = loading ? 'isLoading' : 'isLoaded';
+
+
+    return (
+        <Main
+            title="서치하는 공간"
+            description="흥미가 생길만한 영상을 골라보아요"
+        >
+            <section id='searchPage'>
+                <h2>😀 <em>{searchId}</em> 검색 결과입니다.</h2>
+
+                <div className={`video__inner ${channelPageClass}`}>
+                    <VideoSearch videos={videos} />
+                </div>
+
+                <div className="video__more">
+                    <button onClick={handleLoadMore}>더 보기</button>
+                </div>
+            </section>
+        </Main >
+
+    )
+
+}
+```
+`**query`는 검색 키워드를 말하며, `pageToken`은 비디오 page를 뜻합니다.**
+
+**검색한 키워드에 따른 비디오를 차례대로 나열하는 코드 입니다.**
+
+7. Channel
 ![Channel](Channel.png)
+```
+const Channel = () => {
+    const { channelId } = useParams();                          // 채널 아이디 가져오기
+    const [channelDetail, setChannelDetail] = useState();       // 정보보기
+    const [channelVideo, setChannelVideo] = useState([]);       // 비디오보기
+    const [loading, setLoading] = useState(true);               // 로딩
+    const [nextPageToken, setNextPageToken] = useState(null);   // 더보기
 
-6. Video
+    useEffect(() => {
+        const fetchResults = async () => {
+            try {
+                const data = await fetchFromAPI(`channels?part=snippet&id=${channelId}`);
+                setChannelDetail(data.items[0]);
+
+                const videoData = await fetchFromAPI(`search?channelId=${channelId}&part=snippet&order=date`);
+                setChannelVideo(videoData.items);
+                setNextPageToken(videoData.nextPageToken);
+            } catch (error) {
+                console.log("Eroor -> ", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchResults();
+    }, [channelId])
+
+    const loadMoreVideos = async () => {
+        if (nextPageToken) {
+            const videosData = await fetchFromAPI(`search?channelId=${channelId}&part=snippet%2Cid&order=date&pageToken=${nextPageToken}`);
+            setChannelVideo(prevVideos => [...prevVideos, ...videosData.items]);
+            setNextPageToken(videosData?.nextPageToken);
+        }
+    }
+
+    const channelPageClass = loading ? 'isLoading' : 'isLoaded';
+
+    return (
+        <Main
+            title="English Channel"
+            description="영어를 접하기 쉬운 채널"
+        >
+            <section id='channelPage' className={channelPageClass}>
+                {channelDetail && (
+                    <div className="channel__inner">
+                        <div className="channel__header">
+                            <div className='backImg' style={{ backgroundImage: channelDetail ? `url(${channelDetail.brandingSettings.image.bannerExternalUrl})` : 'none' }}>
+                            </div>
+                            <div className='useImg'><img src={channelDetail.snippet.thumbnails.high.url} alt={channelDetail.brandingSettings.channel.title} /></div>
+                            <div className="nickname">{channelDetail.brandingSettings.channel.title}</div>
+                        </div>
+
+                        <div className="channel__info">
+                            <div className="channel__video">
+                                {channelVideo.map((video, index) => (
+                                    <div className="video__inner" key={index}>
+                                        <div className="video__thumbnails" style={{ backgroundImage: `url(${video.snippet.thumbnails.high.url})` }} alt={video.snippet.title}></div>
+                                        <div className="video__title">
+                                            {video.snippet.title}
+                                        </div>
+                                        {/* <div className="video__desc">
+                                        {video.snippet.description}
+                                    </div> */}
+                                    </div>
+                                ))}
+
+                            </div>
+                            <div className="channel__more">
+                                {nextPageToken && <button onClick={loadMoreVideos}>더 보기</button>}
+                            </div>
+                        </div>
+                    </div>
+
+                )
+                }
+            </section >
+        </Main>
+    )
+}
+```
+
+`data `변수에 채널에 관한 정보, `videoData`에 검색한 비디오에 관한 정보를 넣어놓는다.
+
+9. Video
 ![Video](Video.png)
+```
+const Video = () => {
+    const { videoId } = useParams();
+    const [videoDetail, setVideoDetail] = useState(null);
+    const [tag, settag] = useState('');
+
+    useEffect(() => {
+        fetchFromAPI(`videos?part=snippet, statistics&id=${videoId}`)
+            .then((data) => {
+                setVideoDetail(data.items[0]);
+                console.log("영상데이터:", data.items[0]);
+                settag(data.items[0].snippet.tags)
+            })
+    }, [videoId]);
+
+
+    return (
+        <Main
+            title="Video"
+            description="비디오를 보아요"
+        >
+            <section id="videoPage">
+                <h2 className='blind'>비디오</h2>
+                {videoDetail && (
+                    <div className="video__view">
+                        <h2 className='video__title'>{videoDetail.snippet.title}</h2>
+
+                        <div className="video__play">
+                            <ReactPlayer
+                                playing={true}
+                                width='100%'
+                                height='80vh'
+                                // style={{ position: "absolute", top: 0, left: 0 }}
+                                url={`https://www.youtube.com/watch?v=${videoId}`} />
+                        </div>
+
+                        <div className="video__info">
+                            <div className='id'>
+                                {videoDetail.snippet.channelTitle}
+                            </div>
+                            <div className='count'>
+                                <span className='view'>view: {videoDetail.statistics.viewCount}</span>
+                                <span className='like'>like: {videoDetail.statistics.likeCount}</span>
+                                <span className='comment'>comment: {videoDetail.statistics.commentCount}</span>
+                            </div>
+                        </div>
+                        <div className="video__desc">
+                            <div className="tag">
+                                {tag.map((tag, index) => (
+                                    <span key={index}>#{tag}      </span>
+                                ))}
+                            </div>
+                            <div className="description">
+                                {videoDetail.snippet.description}
+                            </div>
+
+                        </div>
+                    </div>
+                )}
+            </section>
+        </Main>
+    )
+}
+```
 
 ## Layout (header, Search, Footer)
 ### header (Logo, Menu, Sns)
