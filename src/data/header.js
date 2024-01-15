@@ -6,6 +6,7 @@ import { GiClover } from "react-icons/gi";
 import { FaFireAlt } from "react-icons/fa";
 import { FiGithub } from "react-icons/fi";   //  Github아이콘
 import { SiYoutubemusic } from "react-icons/si";    // Youtube Music아이콘
+import { SiReact } from "react-icons/si";
 
 export const menuText = [
     {
@@ -154,8 +155,8 @@ export const snsText = [
         src: "https://www.youtube.com/premium",
         icon: <SiYoutubemusic />
     }, {
-        title: "Blog",
-        src: "",
-        icon: <FiGithub />
+        title: "React",
+        src: "https://ko.legacy.reactjs.org/docs/getting-started.html",
+        icon: <SiReact />
     }
 ]

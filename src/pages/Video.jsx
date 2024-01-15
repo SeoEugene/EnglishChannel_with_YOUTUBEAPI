@@ -6,17 +6,28 @@ import Main from '../components/section/Main';
 
 const Video = () => {
     const { videoId } = useParams();
-    const [videoDetail, setVideoDetail] = useState(null);
-    const [tag, settag] = useState('');
+    const [videoDetail, setVideoDetail] = useState([]);
+    const [tag, setTag] = useState([]);
+    const [comment, setComment] = useState([]);
 
     useEffect(() => {
         fetchFromAPI(`videos?part=snippet, statistics&id=${videoId}`)
             .then((data) => {
                 setVideoDetail(data.items[0]);
                 console.log("영상데이터:", data.items[0]);
-                settag(data.items[0].snippet.tags)
+                setTag(data.items[0].snippet.tags)
             })
     }, [videoId]);
+
+    useEffect(() => {
+        fetchFromAPI(`commentThreads?part=snippet&videoId=${videoId}`)
+            .then((data) => {
+                if (data.items && data.items.length > 0) {
+                    const comments = data.items.map(item => item.snippet.topLevelComment.snippet.textDisplay);
+                    setComment(comments);
+                }
+            })
+    }, [videoId])
 
 
     return (
@@ -26,7 +37,7 @@ const Video = () => {
         >
             <section id="videoPage">
                 <h2 className='blind'>비디오</h2>
-                {videoDetail && (
+                {videoDetail && videoDetail.snippet && (
                     <div className="video__view">
                         <h2 className='video__title'>{videoDetail.snippet.title}</h2>
 
@@ -51,13 +62,22 @@ const Video = () => {
                         </div>
                         <div className="video__desc">
                             <div className="tag">
-                                {tag.map((tag, index) => (
+                                {tag && tag.map((tag, index) => (
                                     <span key={index}>#{tag}      </span>
                                 ))}
                             </div>
-                            <div className="description">
-                                {videoDetail.snippet.description}
+                            <div className='video__talk'>
+                                <div className="description">
+                                    {videoDetail.snippet.description}
+                                </div>
+                                <div className="comment">
+                                    <h3>댓글</h3>
+                                    {comment && comment.map((comment, index) => (
+                                        <div key={index}>{comment}</div>
+                                    ))}
+                                </div>
                             </div>
+
 
                         </div>
                     </div>
