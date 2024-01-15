@@ -1,6 +1,6 @@
 # 나만의 영어 콘텐츠 유튜브 만들기
 
-## 사이트 바로가기
+## 사이트 바로가기: 현재 배포문제 오류 존재
 
 ## 개요
 영어 콘텐츠를 소개하고, 자주 보는 vlog형식의 콘텐츠를 모아놓음으로 써 유튜브 검색 시간을 줄이고자 제작된 웹 서비스 입니다.
@@ -26,11 +26,60 @@
 7.  swiper
 
 ## 페이지 구성
-1. Home
+1. Home ( Today 컴포넌트, Youtuber 컴포넌트, VideoSlider 컴포넌트)
 ![Home](Main1.png)
 ![Home](Main2.png)
+```
+const Home = () => {
+    const [channelVideo1, setChannelVideo1] = useState([]);
+    const [channelVideo2, setChannelVideo2] = useState([]);
+    const [channelVideo3, setChannelVideo3] = useState([]);
+    const [channelVideo4, setChannelVideo4] = useState([]);
 
-2. Today (데이터가 많아 화질 나쁨 주의)
+    useEffect(() => {
+        const v1 = "UC91ipvI9CR1_s1KATHvzATw";
+        const v2 = "UCOgGAfSUy5LvEyVS_LF5kdw";
+        const v3 = "UCiTCEqdWFfDy_0BnGttBmDQ";
+        const v4 = "UCqJODva8CJ_JTbi5ssC2L-g";
+
+        const fetchResults = async () => {
+            try {
+                const videosData1 = await fetchFromAPI(`search?channelId=${v1}&part=snippet&order=date`)
+                const videosData2 = await fetchFromAPI(`search?channelId=${v2}&part=snippet&order=date`)
+                const videosData3 = await fetchFromAPI(`search?channelId=${v3}&part=snippet&order=date`)
+                const videosData4 = await fetchFromAPI(`search?channelId=${v4}&part=snippet&order=date`)
+                setChannelVideo1(videosData1.items);
+                setChannelVideo2(videosData2.items);
+                setChannelVideo3(videosData3.items);
+                setChannelVideo4(videosData4.items);
+                // console.log(videosData1.items);
+            } catch (error) {
+                console.error('Error fetching video data:', error)
+            }
+        }
+        fetchResults();
+    }, [])
+
+    return (
+        <Main
+            title="English Youtube"
+            description="영어 유튜버 모음 사이트에 오신것을 환영합니다."
+        >
+            <Today />
+            <Youtuber />
+
+
+            <VideoSlider videos={channelVideo1} name1='v1' name2='Yoora Jung' />
+            <VideoSlider videos={channelVideo2} name1='v2' name2='영국남자 Korean Englishman' />
+            <VideoSlider videos={channelVideo3} name1='v3' name2='융나YoongNa' />
+            <VideoSlider videos={channelVideo4} name1='v4' name2='Michelle Choi' />
+        </Main >
+    )
+```
+
+
+
+3. Today (데이터가 많아 화질 나쁨 주의)
 ![Today](Today.png)
 ```
 const Today = () => {
