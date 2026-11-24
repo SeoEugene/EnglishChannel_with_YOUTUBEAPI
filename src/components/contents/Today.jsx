@@ -12,7 +12,6 @@ const Today = () => {
             try {
                 const videos = await fetchFromAPI(`search?type=video&part=snippet&q=english channel korean`)
                 settodayvideos(videos.items[0]);
-                console.log(todayvideos);
             } catch (error) {
                 console.error('Error fetching videos:', error);
             }
